@@ -1,28 +1,53 @@
 // features/support/steps.js
-const { Given, When, Then, BeforeAll, AfterAll, setDefaultTimeout } = require("cucumber");
+const {
+  Given,
+  When,
+  Then,
+  BeforeAll,
+  AfterAll,
+  setDefaultTimeout
+} = require("cucumber");
 const { expect } = require("chai");
-const { openBrowser, $, goto, focus, click, write, into, contains, checkBox, textBox, text, toRightOf, toLeftOf, closeBrowser, waitFor, below } = require('taiko');
-
+const {
+  openBrowser,
+  $,
+  goto,
+  focus,
+  click,
+  write,
+  into,
+  contains,
+  checkBox,
+  textBox,
+  text,
+  toRightOf,
+  toLeftOf,
+  closeBrowser,
+  waitFor,
+  below
+} = require("taiko");
 
 setDefaultTimeout(30 * 1000); // 30s
 
 BeforeAll(function() {
-    return openBrowser({headless: false});
-})
+  return openBrowser({ headless: false });
+});
 
 AfterAll(function() {
-    return closeBrowser();
-})
+  return closeBrowser();
+});
 
 Given("a variable set to {int}", function(number) {
   this.setTo(number);
+
   return goto("https://google.com");
 });
 
-When("I increment the variable by {int}", function(number) {
+When("I increment the variable by {int}", async function(number) {
   this.incrementBy(number);
-  return write(`${this.variable} + ${number} =`)
-    .then(click("Google Search"));
+
+  await write(`${this.variable} + ${number} =`);
+  await click("Google Search");
 });
 
 Then("the variable should contain {int}", async function(number) {

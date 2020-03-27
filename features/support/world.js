@@ -13,8 +13,6 @@ class CustomWorld {
   incrementBy(number) {
     this.variable += number;
   }
-
-  
 }
 
 setWorldConstructor(CustomWorld);
